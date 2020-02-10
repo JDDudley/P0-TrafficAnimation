@@ -28,6 +28,7 @@ public class TrafficAnimation extends JPanel {
 	private int stepSize = 4; // global increment
 	private int yOffset = 0; // y offset for fish
 	private int yStepSize = 1; // global y increment
+	private boolean tailFlip = true; // Boolean for tail flip
 	private final Color BACKGROUND_COLOR = new Color(204, 255, 255);
 
 	public void paintComponent(Graphics g) {
@@ -41,6 +42,8 @@ public class TrafficAnimation extends JPanel {
 		xOffset = (xOffset + stepSize) % (width * 3 / 2);
 		// Offset for vertical fish movement
 		yOffset = (yOffset + yStepSize) % (height / 2);
+		// Flip tail
+		tailFlip = !tailFlip;
 		/**
 		 * Background
 		 */
@@ -262,8 +265,10 @@ public class TrafficAnimation extends JPanel {
 		g.setColor(fishAccent);
 		g.drawPolygon(finX, finY, finN);
 		// Tail
+		int tailOffset = (tailFlip) ? fishYScale : -fishYScale;
 		int tailX[] = {fishX + fishScale * 5, fishX + fishScale * 6, fishX + fishScale * 6};
-		int tailY[] = {fishY + fishYScale * 5, fishY + fishYScale * 6 - fishHeight, fishY + fishYScale * 6};
+		int tailY[] = {fishY + fishYScale * 5, fishY + fishYScale * 6 - fishHeight + tailOffset, 
+				fishY + fishYScale * 6 + tailOffset};
 		int tailN = 3;
 		g.setColor(fishColor);
 		g.fillPolygon(tailX, tailY, tailN);

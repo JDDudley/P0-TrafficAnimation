@@ -1,8 +1,13 @@
 # P0-TrafficAnimation
 
 ## Information
-Authors: Jason Dudley & BSU CS 121 instructors.
-Last Version Published:	February 9, 2020
+- Authors:
+	- Jason Dudley
+	- BSU CS 121 instructors.
+- Course:
+	- CS121-002, Spring 2020
+- Last Version Published:
+	- February 9, 2020
 
 ## Description
 This animated ocean scene features background elements and moving objects which interact depending on position.
@@ -41,7 +46,7 @@ This animated ocean scene features background elements and moving objects which 
 	- Custom water color
 	- Custom water accent
 	- Custom island color
-	- Custom beach c9olor
+	- Custom beach color
 	- Custom palm trunk
 	- Custom palm fronds
 	- Custom fish color
