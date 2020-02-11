@@ -29,6 +29,7 @@ public class TrafficAnimation extends JPanel {
 	private int yOffset = 0; // y offset for fish
 	private int yStepSize = 1; // global y increment
 	private boolean tailFlip = true; // Boolean for tail flip
+	private boolean hooked = false; // Boolean for if fish hooked
 	private final Color BACKGROUND_COLOR = new Color(204, 255, 255);
 
 	public void paintComponent(Graphics g) {
@@ -38,10 +39,16 @@ public class TrafficAnimation extends JPanel {
 		// Fill the graphics page with the background color.
 		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, width, height);
-		// Offset increased to allow for smooth transition on and off screen
-		xOffset = (xOffset + stepSize) % (width * 3 / 2);
-		// Offset for vertical fish movement
-		yOffset = (yOffset + yStepSize) % (height / 2);
+		if (!hooked) { // Keep moving everything with offsets
+			// Offset increased to allow for smooth transition on and off screen
+			xOffset = (xOffset + stepSize) % (width * 3 / 2);
+			// Offset for vertical fish movement
+			yOffset = (yOffset + yStepSize) % (height / 2);			
+		}
+		else { // Fish hooked
+			g.setColor(Color.black);
+			g.drawString("FISH ON!", width / 4, height / 4);
+		}
 		// Flip tail
 		tailFlip = !tailFlip;
 		/**
@@ -230,7 +237,6 @@ public class TrafficAnimation extends JPanel {
 		int fishWidth = width / 4;
 		int fishHeight = fishWidth / 6;
 		int fishOffset = xOffset * 2 - fishWidth * 2;
-		boolean swimLeft = true;
 		int fishX = width - fishOffset;
 		int fishY = height * 3 / 4;
 		int fishScale = fishWidth / 6;
@@ -244,9 +250,7 @@ public class TrafficAnimation extends JPanel {
 		// Vertical Movement & Angle Fish
 		int fishYScale = fishHeight / 6;
 		int fishYOffset = yOffset + height * 3 / 4;
-		boolean swimDown = true;
 		if (fishYOffset > height) { // Swimming up
-			swimDown = false;
 			fishY = height - (fishYOffset % (height / 2));
 		}
 		else { // Swimming Down
@@ -275,8 +279,12 @@ public class TrafficAnimation extends JPanel {
 		g.setColor(fishAccent);
 		g.drawPolygon(tailX, tailY, tailN);
 		g.setColor(fishAccent);
-		// Fish line
-//		g.drawLine(fishX + fishScale, fishY + fishYScale, fishX + fishScale * 6, fishY + fishYScale * 6);
+		// Check if fish hooked
+		int baitX = hullX - cabinLength;
+		int baitY = height * 3 / 4;
+		if (baitX - fishX > -8 && baitX - fishX < 8 && 
+				baitY - fishY > -8 && baitY - fishY < 8) 
+			hooked = true;
 		/**
 		 * END DRAWING
 		 */
